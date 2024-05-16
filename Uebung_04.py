@@ -1,16 +1,16 @@
 import geopandas as gpd
-import pandas as pd
+import functions
 
-data = gpd.read_file("data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp")
-
-def get_nachbar_nachbar(Start_Land):
+def get_nachbar_nachbar(file, Start_Land):
     
-    nachbarn = get_nachbarn(Start_Land)
+    data = gpd.read_file(file)
+    
+    nachbarn = functions.get_nachbarn(data, Start_Land)
     
     list_all = []
     
     for i in nachbarn:
-        list_nachbarn = get_nachbarn(i)       
+        list_nachbarn = functions.get_nachbarn(data, i)       
         for y in list_nachbarn:
             list_all.append(y)
     
@@ -22,7 +22,7 @@ def get_nachbar_nachbar(Start_Land):
     
     for i in list_without_start_land:
         
-        einwohner = get_population(i)
+        einwohner = functions.get_population(data, i)
         
         einwohner_gesamt = einwohner_gesamt + einwohner
         print(einwohner_gesamt)
@@ -34,38 +34,6 @@ def get_nachbar_nachbar(Start_Land):
     # Namen der Nachbarländer
     #print(list_all)
 
-def get_population(Land):
-    
-    index = get_index(Land)
-    
-    einwohner = data.loc[index].POP_EST.tolist()  
-    
-    return einwohner
-
-def get_area(Land):
-    
-    pass
- 
-def get_nachbarn(Land):
-    
-    # Index des eingebenen Landes (deutschsprachiger Name des Landes erfordert)
-    index = get_index(Land)
-    
-    # Ermittlung der Nachbarn des Landes mit touches Funtion
-    nachbarn = data[data.geometry.touches(data.loc[index]['geometry'])].NAME_DE.tolist()
-    
-    return nachbarn
-
-def get_index(Land):
-    
-    # Index des eingebenen Landes (deutschsprachiger Name des Landes erfordert)
-    index = data.index[data["NAME_DE"] == Land].tolist()
-    
-    index = int(index[0])
-    
-    return index
-
-
 if __name__ == "__main__":
-    get_nachbar_nachbar("Deutschland")
+    get_nachbar_nachbar("data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp", "Deutschland")
     #get_population("Deutschland")

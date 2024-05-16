@@ -1,11 +1,39 @@
 import geopandas as gpd
 import pandas as pd
 
-#pd.set_option('display.max_rows', None, 'display.max_columns', None)
+data = gpd.read_file("data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp")
+ 
 
-file_path = "data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp"
-
-data = gpd.read_file(file_path)
+def get_nachbarn(Land):
+    
+    # Index des eingebenen Landes (deutschsprachiger Name des Landes erfordert)
+    index = data.index[data["NAME_DE"] == Land].tolist()
+    
+    # Ermittlung der Nachbarn des Landes mit touches Funtion
+    nachbarn = data[data.geometry.touches(data.loc[int(index[0])]['geometry'])].NAME_DE.tolist()
+    
+    return nachbarn
+        
+    
+def get_nachbar_nachbar(Start_Land):
+    
+    nachbarn = get_nachbarn(Start_Land)
+    
+    list_all = []
+    
+    for i in nachbarn:
+        list_nachbarn = get_nachbarn(i)       
+        for y in list_nachbarn:
+            list_all.append(y)
+    
+    list_all = set(list_all)
+    # Eingegebens Land entfernen
+    #list_all.remove(Start_Land)
+    # Anzahl der Nachbarländer
+    print(len(list_all))
+    # Namen der Nachbarländer
+    print(list_all)
+        
 #print(type(data))
 #print(data.head(5))
 #test=print(data[data["SOVEREIGNT"] == "Germany"])
@@ -14,19 +42,5 @@ data = gpd.read_file(file_path)
 #print(data[data["SOVEREIGNT"] == "Germany"]["NAME"])
 
 
-index = data.index[data["NAME"] == "Germany"].tolist()
-
-neighbors = data[data.geometry.touches(data.loc[int(index[0])]['geometry'])].NAME.tolist() 
-
-for i in neighbors:
-    print(i)
-    index_nachbar_nachbar = data.index[data["NAME"] == i].tolist()
-    nachbar_nachbar = data[data.geometry.touches(data.loc[int(index_nachbar_nachbar[0])]['geometry'])].NAME.tolist() 
-    print(index_nachbar_nachbar)
-    print(nachbar_nachbar)
-    #nachbar_nachbar=data[data["SOVEREIGNT"] == i]
-    #print(nachbar_nachbar)
-    
-print(neighbors)
-#neighbors = data[data["SOVEREIGNT"] == "Germany"]["NEIGHBORS"]
-#print(neighbors)
+if __name__ == "__main__":
+    get_nachbar_nachbar("Deutschland")

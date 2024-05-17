@@ -7,6 +7,8 @@ def get_nachbar_nachbar(file, Start_Land):
     
     nachbarn = functions.get_nachbarn(data, Start_Land)
     
+    functions.get_area(data, Start_Land)
+    
     list_all = []
     
     for i in nachbarn:
@@ -18,14 +20,26 @@ def get_nachbar_nachbar(file, Start_Land):
     list_without_start_land = list_all
     list_without_start_land.remove(Start_Land)
     
-    einwohner_gesamt = 0
-    
+    einwohner_gesamt = 0 
     for i in list_without_start_land:
         
         einwohner = functions.get_population(data, i)
         
         einwohner_gesamt = einwohner_gesamt + einwohner
-        print(einwohner_gesamt)
+        
+        
+        
+    area_gesamt = 0
+    for i in list_without_start_land:
+        
+        area = functions.get_area(data, i)
+        
+        area_gesamt = area_gesamt + area
+     
+    print(einwohner_gesamt) 
+    print(area_gesamt)  
+    bevoelkerungsichte = einwohner_gesamt / area_gesamt
+    print(bevoelkerungsichte)
         
     # Eingegebens Land entfernen
     #list_all.remove(Start_Land)
@@ -35,5 +49,5 @@ def get_nachbar_nachbar(file, Start_Land):
     #print(list_all)
 
 if __name__ == "__main__":
-    get_nachbar_nachbar("data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp", "Deutschland")
+    get_nachbar_nachbar("data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp", "Namibia")
     #get_population("Deutschland")

@@ -32,7 +32,17 @@ def get_population(data, Land):
 
 def get_area(data, Land):
     
-    pass
+    # Index des Landes
+    index = get_index(data, Land)
+    
+    # Umprojezierung
+    # Funktion Area kann nicht mit Lat/Long rechnen
+    data = data.to_crs({'proj':'cea'})
+    
+    # Ermittlung der Fläche des Landes
+    area = data.loc[index]['geometry'].area / 10**6
+    
+    return area
 
 def export_geopackage():
     

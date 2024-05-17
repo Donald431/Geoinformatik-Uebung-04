@@ -20,6 +20,18 @@ def get_nachbarn(data, Land):
     
     return nachbarn
 
+def get_nachbarn_nachbarn(data, nachbarn):
+    
+    list_all = []
+    
+    # Liste mit den Nchbarländern der Nachbarländer
+    for i in nachbarn:
+        list_nachbarn = get_nachbarn(data, i)       
+        for y in list_nachbarn:
+            list_all.append(y)
+            
+    return list_all
+
 def get_population(data, Land):
     
     # Index des Landes

@@ -7,16 +7,7 @@ def get_nachbar_nachbar(file, Start_Land):
     
     nachbarn = functions.get_nachbarn(data, Start_Land)
     
-    functions.get_area(data, Start_Land)
-    
-    list_all = []
-    
-    for i in nachbarn:
-        list_nachbarn = functions.get_nachbarn(data, i)       
-        for y in list_nachbarn:
-            list_all.append(y)
-    
-    list_all = set(list_all)
+    list_all = set(functions.get_nachbarn_nachbarn(data, nachbarn))
     list_without_start_land = list_all
     list_without_start_land.remove(Start_Land)
         

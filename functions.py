@@ -30,6 +30,19 @@ def get_population(data, Land):
     
     return einwohner
 
+def get_population_gesamt(data, list_without_start_land):
+    
+    einwohner_gesamt = 0 
+    
+    # Berechnung der gesamt Einwohner für die Länder außer dem Startland
+    for i in list_without_start_land:
+        
+        einwohner = get_population(data, i)
+        
+        einwohner_gesamt = einwohner_gesamt + einwohner
+        
+    return einwohner_gesamt
+
 def get_area(data, Land):
     
     # Index des Landes
@@ -43,6 +56,19 @@ def get_area(data, Land):
     area = data.loc[index]['geometry'].area / 10**6
     
     return area
+
+def get_area_gesamt(data, list_without_start_land):
+    
+    area_gesamt = 0
+    
+    # Berechnung der gesamt Fläche für die Länder außer dem Startland
+    for i in list_without_start_land:
+        
+        area = get_area(data, i)
+        
+        area_gesamt = area_gesamt + area
+        
+    return area_gesamt
 
 def export_geopackage():
     

@@ -19,35 +19,25 @@ def get_nachbar_nachbar(file, Start_Land):
     list_all = set(list_all)
     list_without_start_land = list_all
     list_without_start_land.remove(Start_Land)
-    
-    einwohner_gesamt = 0 
-    for i in list_without_start_land:
         
-        einwohner = functions.get_population(data, i)
-        
-        einwohner_gesamt = einwohner_gesamt + einwohner
-        
-        
-        
-    area_gesamt = 0
-    for i in list_without_start_land:
-        
-        area = functions.get_area(data, i)
-        
-        area_gesamt = area_gesamt + area
      
-    print(einwohner_gesamt) 
-    print(area_gesamt)  
+    area_gesamt = functions.get_area_gesamt(data, list_without_start_land)
+    einwohner_gesamt = functions.get_population_gesamt(data, list_without_start_land) 
     bevoelkerungsichte = einwohner_gesamt / area_gesamt
-    print(bevoelkerungsichte)
-        
-    # Eingegebens Land entfernen
-    #list_all.remove(Start_Land)
-    # Anzahl der Nachbarländer
-    #print(len(list_all))
-    # Namen der Nachbarländer
-    #print(list_all)
+    
+    print(f'Anzahl der Nachbarländer der Nachbarländer: {len(list_all)}')
+    print("-" * 70)
+    print(f'Namen der Nachbarländer der Nachbarländer:')
+    for i in list_all:
+        print(f'-   {i}')
+    print("-" * 70)
+    print(f'Die nachfolgenden Angaben sind alle exklusive des eingegebenen Landes')
+    print(f'Gesamtfläche der Nachbarländer der Nachbarländer: {area_gesamt:,.3f} km\u00b2')
+    print("-" * 70)
+    print(f'Gesamtbevölkerung der Nachbarländer der Nachbarländer: {einwohner_gesamt:,}')
+    print("-" * 70)
+    print(f'Bevölkerungsdichte der Nachbarländer der Nachbarländer: {bevoelkerungsichte:,.3f} P / km\u00b2')
 
 if __name__ == "__main__":
-    get_nachbar_nachbar("data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp", "Namibia")
+    get_nachbar_nachbar("data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp", "Deutschland")
     #get_population("Deutschland")

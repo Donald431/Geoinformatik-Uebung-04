@@ -1,4 +1,6 @@
 import geopandas as gpd
+import pandas as pd
+from pathlib import Path
 
 def get_index(data, Land):
     
@@ -82,6 +84,27 @@ def get_area_gesamt(data, list_without_start_land):
         
     return area_gesamt
 
-def export_geopackage():
+def export_geopackage(data, Start_Land, list_without_start_land):
     
-    pass
+    # Index des Landes
+    index = get_index(data, Start_Land)
+
+    # Doppelte [] bei loc, damit Geodataframe zurückgegeben wird
+    geodataframe_all = data.loc[[index]]
+    
+    for i in list_without_start_land:
+        
+        # Index des Landes
+        index = get_index(data, i)
+    
+        # Doppelte [] bei loc, damit Geodataframe zurückgegeben wird
+        dataframe = data.loc[[index]]
+    
+        geodataframe_all = pd.concat([geodataframe_all, dataframe])
+    
+    # Ordner für Export erstellen
+    path = Path("export")
+    path.mkdir(exist_ok=True)
+    
+    # Export in shp datein
+    geodataframe_all.to_file("export/export.shp")

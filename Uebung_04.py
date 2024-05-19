@@ -8,7 +8,7 @@ def get_nachbar_nachbar(file, Start_Land):
     nachbarn = functions.get_nachbarn(data, Start_Land)
     
     list_all = set(functions.get_nachbarn_nachbarn(data, nachbarn))
-    list_without_start_land = list_all
+    list_without_start_land = list_all.copy()
     list_without_start_land.remove(Start_Land)
         
      
@@ -28,6 +28,11 @@ def get_nachbar_nachbar(file, Start_Land):
     print(f'Gesamtbevölkerung der Nachbarländer der Nachbarländer: {einwohner_gesamt:,}')
     print("-" * 70)
     print(f'Bevölkerungsdichte der Nachbarländer der Nachbarländer: {bevoelkerungsichte:,.3f} P / km\u00b2')
+    
+    # Export der Daten in eine .shp Datei
+    functions.export_geopackage(data, Start_Land, list_without_start_land)
+    print("-" * 70)
+    print(f'Der Export war erfolgreich! \nDie exportierte Datei befindet sich im Ordner Export')
 
 if __name__ == "__main__":
     get_nachbar_nachbar("data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp", "Deutschland")

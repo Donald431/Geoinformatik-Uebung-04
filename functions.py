@@ -1,4 +1,3 @@
-import geopandas as gpd
 import pandas as pd
 from pathlib import Path
 import matplotlib.pyplot as plt
@@ -121,12 +120,12 @@ def plot_countries(data, Start_Land, list_without_start_land):
        
     geodataframe_all = get_geodataframe_all(data, Start_Land, list_without_start_land)
     
+    # Plot der Daten
     base = data.plot(color='white', edgecolor='black', linewidth = 0.1)
     geodataframe_all.plot(ax=base, edgecolor='black', linewidth = 0.1)
      
     plt.title("Weltkarte") 
-    base.set_axis_off()
+    base.set_axis_off() # Ausblenden der Axen
     
+    # Speichern der Grafik im Export Ordner
     plt.savefig("export/Weltkarte.png", dpi=900, bbox_inches="tight")
-    
-    plt.show()

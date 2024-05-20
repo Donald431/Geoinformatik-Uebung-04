@@ -32,14 +32,8 @@ def get_nachbar_nachbar(file, Start_Land):
     # Export der Daten in eine .shp Datei
     functions.export_geopackage(data, Start_Land, list_without_start_land)
     print("-" * 70)
-    print(f'Der Export war erfolgreich! \nDie exportierte Datei befindet sich im Ordner Export')
+    print(f'Export als .shp erfolgreich im Ordner Export erstellt!')
     
     # Plotten der Länder
     functions.plot_countries(data, Start_Land, list_without_start_land)
-    print("-" * 70)
-    print(f'Weltkarte erfolgreich erstellt!')
-    
-
-if __name__ == "__main__":
-    get_nachbar_nachbar("data/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp", "Deutschland")
-    #get_population("Deutschland")
+    print(f'Weltkarte als .png erfolgreich im Ordner Export erstellt!')

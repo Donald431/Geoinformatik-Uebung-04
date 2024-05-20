@@ -1,6 +1,7 @@
 import geopandas as gpd
 import pandas as pd
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 def get_index(data, Land):
     
@@ -86,6 +87,18 @@ def get_area_gesamt(data, list_without_start_land):
 
 def export_geopackage(data, Start_Land, list_without_start_land):
     
+    geodataframe_all = get_geodataframe_all(data, Start_Land, list_without_start_land)   
+     
+    # Ordner für Export erstellen
+    path = Path("export")
+    path.mkdir(exist_ok=True)
+    
+    # Export in shp datein
+    geodataframe_all.to_file("export/export.shp")
+    
+    
+def get_geodataframe_all(data, Start_Land, list_without_start_land):
+    
     # Index des Landes
     index = get_index(data, Start_Land)
 
@@ -102,9 +115,18 @@ def export_geopackage(data, Start_Land, list_without_start_land):
     
         geodataframe_all = pd.concat([geodataframe_all, dataframe])
     
-    # Ordner für Export erstellen
-    path = Path("export")
-    path.mkdir(exist_ok=True)
+    return geodataframe_all
+              
+def plot_countries(data, Start_Land, list_without_start_land):
+       
+    geodataframe_all = get_geodataframe_all(data, Start_Land, list_without_start_land)
     
-    # Export in shp datein
-    geodataframe_all.to_file("export/export.shp")
+    base = data.plot(color='white', edgecolor='black', linewidth = 0.1)
+    geodataframe_all.plot(ax=base, edgecolor='black', linewidth = 0.1)
+     
+    plt.title("Weltkarte") 
+    base.set_axis_off()
+    
+    plt.savefig("export/Weltkarte.png", dpi=900, bbox_inches="tight")
+    
+    plt.show()

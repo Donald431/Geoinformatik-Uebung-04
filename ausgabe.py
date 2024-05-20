@@ -11,11 +11,17 @@ def get_nachbar_nachbar(file, Start_Land):
     list_without_start_land = list_all.copy()
     list_without_start_land.remove(Start_Land)
         
-     
     area_gesamt = functions.get_area_gesamt(data, list_without_start_land)
     einwohner_gesamt = functions.get_population_gesamt(data, list_without_start_land) 
-    bevoelkerungsichte = einwohner_gesamt / area_gesamt
     
+    # Wenn Nachbarland des NAchbarland nur das eingebene Land ist, kann keine Bevölkerungsdichte berechnet wer
+    # Dann würde durch 0 geteilt werden womit ein Fehler auftritt
+    if area_gesamt == 0 and einwohner_gesamt == 0:
+        bevoelkerungsichte = 0
+    else:
+        bevoelkerungsichte = einwohner_gesamt / area_gesamt
+    
+    print("-" * 70)
     print(f'Anzahl der Nachbarländer der Nachbarländer: {len(list_all)}')
     print("-" * 70)
     print(f'Namen der Nachbarländer der Nachbarländer:')

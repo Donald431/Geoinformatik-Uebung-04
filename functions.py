@@ -1,6 +1,7 @@
 import pandas as pd
 from pathlib import Path
 import matplotlib.pyplot as plt
+import sys
 
 def get_index(data, Land):
     
@@ -19,6 +20,11 @@ def get_nachbarn(data, Land):
     
     # Ermittlung der Nachbarn des Landes mit touches Funtion
     nachbarn = data[data.geometry.touches(data.loc[index]['geometry'])].NAME_DE.tolist()
+    
+    # Kontrolle ob Nachbarländer vorhanden sind
+    if len(nachbarn) == 0:
+        print(f'Das eingegebene Land hat keine Nachbarländer! \nDas Programm wird beendet.')
+        sys.exit()
     
     return nachbarn
 

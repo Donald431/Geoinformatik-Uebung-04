@@ -1,10 +1,7 @@
-import geopandas as gpd
 import functions
 
-def get_nachbar_nachbar(file, Start_Land):
-    
-    data = gpd.read_file(file)
-    
+def get_nachbar_nachbar(data, Start_Land):
+      
     nachbarn = functions.get_nachbarn(data, Start_Land)
     
     list_all = set(functions.get_nachbarn_nachbarn(data, nachbarn))
@@ -31,7 +28,7 @@ def get_nachbar_nachbar(file, Start_Land):
     print(f'Die nachfolgenden Angaben sind alle exklusive des eingegebenen Landes')
     print(f'Gesamtfläche der Nachbarländer der Nachbarländer: {area_gesamt:,.3f} km\u00b2')
     print("-" * 70)
-    print(f'Gesamtbevölkerung der Nachbarländer der Nachbarländer: {einwohner_gesamt:,}')
+    print(f'Gesamtbevölkerung der Nachbarländer der Nachbarländer: {einwohner_gesamt:,.0f}')
     print("-" * 70)
     print(f'Bevölkerungsdichte der Nachbarländer der Nachbarländer: {bevoelkerungsichte:,.3f} P / km\u00b2')
     
